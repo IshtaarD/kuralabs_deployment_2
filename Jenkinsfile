@@ -25,8 +25,17 @@ pipeline {
         always {
           junit 'test-reports/results.xml'
         }
-       
-      }
+        success { 
+          slackSend channel: 'jenkinsnotifications',
+                    color: 'good',
+                    message: "The test completed successfully."
+        }
+        failure  {
+          slackSend channel: 'jenkinsnotifications',
+                    color: 'warning',
+                    message: "The test FAILED"
+        }   
+      }  
     }
      stage ('Deploy') {
        steps {

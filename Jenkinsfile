@@ -12,6 +12,19 @@ pipeline {
         flask run &
         '''
      }
+      
+     post{
+        success { 
+          slackSend channel: 'jenkinsnotifications',
+                    color: 'good',
+                    message: "The build completed successfully."
+        }
+        failure  {
+          slackSend channel: 'jenkinsnotifications',
+                    color: 'warning',
+                    message: "The buid FAILED"
+        }   
+     }   
    }
     stage ('test') {
       steps {

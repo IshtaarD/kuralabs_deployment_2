@@ -22,7 +22,7 @@ pipeline {
         failure  {
           slackSend channel: 'jenkinsnotifications',
                     color: 'warning',
-                    message: "The buid FAILED"
+                    message: "The build FAILED"
         }   
      }   
    }
@@ -54,6 +54,18 @@ pipeline {
        steps {
          sh '/var/lib/jenkins/.local/bin/eb deploy url-shortener-main-dev'
        }
+       post{
+        success { 
+          slackSend channel: 'jenkinsnotifications',
+                    color: 'good',
+                    message: "The application has been successfully deployed."
+        }
+        failure  {
+          slackSend channel: 'jenkinsnotifications',
+                    color: 'warning',
+                    message: "The application did not deploy successfully"
+        }
+      }    
      }   
    }
  }
